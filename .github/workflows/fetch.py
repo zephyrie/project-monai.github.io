@@ -5,6 +5,7 @@ from bs4 import BeautifulSoup
 import markdown
 import tempfile
 import os
+import time
 
 def get_bundle_web_data(bundle_name, download_dir):
     web_data = {}
@@ -61,6 +62,8 @@ def main():
       bundle_name = item[0]
       bundle_web_data = get_bundle_web_data(bundle_name, temp_dir)
       all_models[bundle_name] = bundle_web_data
+      time.sleep(10)
+
   
   environment = Environment(loader=FileSystemLoader("./templates/"))
   template = environment.get_template("model-template.html")
