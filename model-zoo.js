@@ -25,10 +25,33 @@ function formatDownloadUrl(model) {
   var version = model.version;
   return "https://proxy.monai.io/proxy/download/".concat(modelName, "/versions/").concat(version, "/files/").concat(modelName, "_v").concat(version, ".zip");
 }
-function ModelCard(_ref) {
-  var model = _ref.model,
-    onViewDetails = _ref.onViewDetails;
+function TagFilter(_ref) {
+  var tags = _ref.tags,
+    activeTag = _ref.activeTag,
+    onTagChange = _ref.onTagChange;
+  return /*#__PURE__*/React.createElement("div", {
+    className: "flex flex-wrap gap-3 mb-6"
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: function onClick() {
+      return onTagChange(null);
+    },
+    className: "px-3 py-1.5 rounded-full text-sm font-medium transition-colors ".concat(activeTag === null ? 'bg-brand-primary text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200')
+  }, "All Models"), tags.map(function (tag) {
+    return /*#__PURE__*/React.createElement("button", {
+      key: tag,
+      onClick: function onClick() {
+        return onTagChange(tag);
+      },
+      className: "px-3 py-1.5 rounded-full text-sm font-medium transition-colors ".concat(activeTag === tag ? tag === 'Bundle' ? 'bg-green-600 text-white' : 'bg-blue-600 text-white' : tag === 'Bundle' ? 'bg-green-100 text-green-800 hover:bg-green-200' : 'bg-blue-100 text-blue-800 hover:bg-blue-200')
+    }, tag, " Models");
+  }));
+}
+function ModelCard(_ref2) {
+  var model = _ref2.model,
+    onViewDetails = _ref2.onViewDetails;
   var isHuggingFaceModel = model.huggingface_url || model.model_id && model.model_id.startsWith('hf_');
+  var modelTag = isHuggingFaceModel ? "HF" : "Bundle";
+  var tagColorClass = isHuggingFaceModel ? "bg-blue-100 text-blue-800" : "bg-green-100 text-green-800";
   return /*#__PURE__*/React.createElement("div", {
     className: "p-4 sm:p-6 shadow-lg rounded-lg border-2 border-neutral-lightgray relative transform transition-all duration-300 hover:shadow-xl hover:-translate-y-1 bg-white"
   }, /*#__PURE__*/React.createElement("div", {
@@ -37,9 +60,9 @@ function ModelCard(_ref) {
     className: "flex justify-between items-start"
   }, /*#__PURE__*/React.createElement("h3", {
     className: "text-lg font-bold text-gray-800 mb-2 break-words"
-  }, model.model_name), isHuggingFaceModel && /*#__PURE__*/React.createElement("span", {
-    className: "px-2 py-1 bg-blue-100 text-blue-800 text-xs font-semibold rounded"
-  }, "HF Model")), /*#__PURE__*/React.createElement("h5", {
+  }, model.model_name), /*#__PURE__*/React.createElement("span", {
+    className: "px-2 py-1 ".concat(tagColorClass, " text-xs font-semibold rounded")
+  }, modelTag, " Model")), /*#__PURE__*/React.createElement("h5", {
     className: "text-brand-primary text-sm mb-2 break-words"
   }, model.authors), /*#__PURE__*/React.createElement("p", {
     className: "text-sm text-gray-600 mb-4 line-clamp-3 break-words"
@@ -93,11 +116,13 @@ function ModelCard(_ref) {
     d: isHuggingFaceModel ? "M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" : "M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
   })))))));
 }
-function ModelDetailsModal(_ref2) {
-  var model = _ref2.model,
-    onClose = _ref2.onClose;
+function ModelDetailsModal(_ref3) {
+  var model = _ref3.model,
+    onClose = _ref3.onClose;
   if (!model) return null;
   var isHuggingFaceModel = model.huggingface_url || model.model_id && model.model_id.startsWith('hf_');
+  var modelTag = isHuggingFaceModel ? "HF" : "Bundle";
+  var tagColorClass = isHuggingFaceModel ? "bg-blue-100 text-blue-800" : "bg-green-100 text-green-800";
   var handleBackdropClick = function handleBackdropClick(e) {
     if (e.target === e.currentTarget) {
       onClose();
@@ -132,9 +157,9 @@ function ModelDetailsModal(_ref2) {
     className: "flex items-center gap-3"
   }, /*#__PURE__*/React.createElement("h2", {
     className: "text-xl sm:text-2xl font-bold text-brand-primary break-words"
-  }, model.model_name), isHuggingFaceModel && /*#__PURE__*/React.createElement("span", {
-    className: "px-2 py-1 bg-blue-100 text-blue-800 text-xs font-semibold rounded"
-  }, "HF Model")), /*#__PURE__*/React.createElement("p", {
+  }, model.model_name), /*#__PURE__*/React.createElement("span", {
+    className: "px-2 py-1 ".concat(tagColorClass, " text-xs font-semibold rounded")
+  }, modelTag, " Model")), /*#__PURE__*/React.createElement("p", {
     className: "text-sm text-gray-600 mt-1"
   }, "Version ", model.version)), /*#__PURE__*/React.createElement("div", {
     className: "flex items-center gap-3 -mr-2 sm:mr-0"
@@ -239,10 +264,10 @@ function ModelDetailsModal(_ref2) {
     className: "text-sm text-gray-500"
   }, "Showing last ", Math.min(8, Object.keys(model.changelog).length), " changes")), model.changelog ? /*#__PURE__*/React.createElement("div", {
     className: "space-y-3"
-  }, Object.entries(model.changelog).slice(0, 8).map(function (_ref3, index) {
-    var _ref4 = _slicedToArray(_ref3, 2),
-      version = _ref4[0],
-      changes = _ref4[1];
+  }, Object.entries(model.changelog).slice(0, 8).map(function (_ref4, index) {
+    var _ref5 = _slicedToArray(_ref4, 2),
+      version = _ref5[0],
+      changes = _ref5[1];
     return /*#__PURE__*/React.createElement("div", {
       key: index,
       className: "flex gap-4 text-sm"
@@ -309,17 +334,49 @@ function ModelZoo() {
     _useState4 = _slicedToArray(_useState3, 2),
     selectedModel = _useState4[0],
     setSelectedModel = _useState4[1];
+  var _useState5 = useState(null),
+    _useState6 = _slicedToArray(_useState5, 2),
+    activeTag = _useState6[0],
+    setActiveTag = _useState6[1];
+  var _useState7 = useState({
+      total: 0,
+      bundle: 0,
+      hf: 0
+    }),
+    _useState8 = _slicedToArray(_useState7, 2),
+    modelCount = _useState8[0],
+    setModelCount = _useState8[1];
   useEffect(function () {
     var url = './model_data.json';
     console.log('Fetching data from:', url);
     fetch(url).then(function (response) {
       return response.json();
     }).then(function (data) {
-      return setModels(Object.values(data));
+      var modelList = Object.values(data);
+      setModels(modelList);
+
+      // Count models by type
+      var bundleCount = modelList.filter(function (model) {
+        return !(model.huggingface_url || model.model_id && model.model_id.startsWith('hf_'));
+      }).length;
+      var hfCount = modelList.filter(function (model) {
+        return model.huggingface_url || model.model_id && model.model_id.startsWith('hf_');
+      }).length;
+      setModelCount({
+        total: modelList.length,
+        bundle: bundleCount,
+        hf: hfCount
+      });
     })["catch"](function (error) {
       return console.error('Error fetching data:', error);
     });
   }, []);
+
+  // Filter models based on selected tag
+  var filteredModels = activeTag === null ? models : models.filter(function (model) {
+    var isHF = model.huggingface_url || model.model_id && model.model_id.startsWith('hf_');
+    return activeTag === 'HF' ? isHF : !isHF;
+  });
   return /*#__PURE__*/React.createElement("div", {
     className: "min-h-screen bg-gray-50"
   }, /*#__PURE__*/React.createElement("section", {
@@ -389,17 +446,37 @@ function ModelZoo() {
     className: "py-16 bg-brand-dark/15"
   }, /*#__PURE__*/React.createElement("div", {
     className: "container mx-auto px-4"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "flex flex-col md:flex-row md:items-center justify-between mb-8"
   }, /*#__PURE__*/React.createElement("h2", {
-    className: "text-3xl font-bold text-gray-800 mb-8"
+    className: "text-3xl font-bold text-gray-800 mb-4 md:mb-0"
   }, "Available Models"), /*#__PURE__*/React.createElement("div", {
+    className: "flex items-center gap-4"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "text-sm text-gray-600"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "font-medium"
+  }, modelCount.total), " models available (", /*#__PURE__*/React.createElement("span", {
+    className: "text-green-600 font-medium"
+  }, modelCount.bundle), " Bundle,", /*#__PURE__*/React.createElement("span", {
+    className: "text-blue-600 font-medium"
+  }, " ", modelCount.hf), " HF)"))), /*#__PURE__*/React.createElement(TagFilter, {
+    tags: ['Bundle', 'HF'],
+    activeTag: activeTag,
+    onTagChange: setActiveTag
+  }), /*#__PURE__*/React.createElement("div", {
     className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-  }, models.map(function (model, index) {
+  }, filteredModels.map(function (model, index) {
     return /*#__PURE__*/React.createElement(ModelCard, {
       key: index,
       model: model,
       onViewDetails: setSelectedModel
     });
-  })))), selectedModel && /*#__PURE__*/React.createElement(ModelDetailsModal, {
+  }), filteredModels.length === 0 && /*#__PURE__*/React.createElement("div", {
+    className: "col-span-3 py-16 text-center"
+  }, /*#__PURE__*/React.createElement("p", {
+    className: "text-lg text-gray-600"
+  }, "No models found matching the selected filter."))))), selectedModel && /*#__PURE__*/React.createElement(ModelDetailsModal, {
     model: selectedModel,
     onClose: function onClose() {
       return setSelectedModel(null);
