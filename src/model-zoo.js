@@ -18,17 +18,51 @@ function formatDownloadUrl(model) {
   return `https://proxy.monai.io/proxy/download/${modelName}/versions/${version}/files/${modelName}_v${version}.zip`;
 }
 
+function TagFilter({ tags, activeTag, onTagChange }) {
+  return (
+    <div className="flex flex-wrap gap-3 mb-6">
+      <button
+        onClick={() => onTagChange(null)}
+        className={`px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${
+          activeTag === null
+            ? 'bg-brand-primary text-white'
+            : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+        }`}
+      >
+        All Models
+      </button>
+      {tags.map((tag) => (
+        <button
+          key={tag}
+          onClick={() => onTagChange(tag)}
+          className={`px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${
+            activeTag === tag
+              ? (tag === 'Bundle' ? 'bg-green-600 text-white' : 'bg-blue-600 text-white')
+              : (tag === 'Bundle' 
+                ? 'bg-green-100 text-green-800 hover:bg-green-200' 
+                : 'bg-blue-100 text-blue-800 hover:bg-blue-200')
+          }`}
+        >
+          {tag} Models
+        </button>
+      ))}
+    </div>
+  );
+}
+
 function ModelCard({ model, onViewDetails }) {
   const isHuggingFaceModel = model.huggingface_url || (model.model_id && model.model_id.startsWith('hf_'));
+  const modelTag = isHuggingFaceModel ? "HF" : "Bundle";
+  const tagColorClass = isHuggingFaceModel 
+    ? "bg-blue-100 text-blue-800" 
+    : "bg-green-100 text-green-800";
   
   return (
     <div className="p-4 sm:p-6 shadow-lg rounded-lg border-2 border-neutral-lightgray relative transform transition-all duration-300 hover:shadow-xl hover:-translate-y-1 bg-white">
       <div className="flex flex-col h-full">
         <div className="flex justify-between items-start">
           <h3 className="text-lg font-bold text-gray-800 mb-2 break-words">{model.model_name}</h3>
-          {isHuggingFaceModel && (
-            <span className="px-2 py-1 bg-blue-100 text-blue-800 text-xs font-semibold rounded">HF Model</span>
-          )}
+          <span className={`px-2 py-1 ${tagColorClass} text-xs font-semibold rounded`}>{modelTag} Model</span>
         </div>
         <h5 className="text-brand-primary text-sm mb-2 break-words">{model.authors}</h5>
         <p className="text-sm text-gray-600 mb-4 line-clamp-3 break-words">{model.description}</p>
@@ -75,6 +109,10 @@ function ModelDetailsModal({ model, onClose }) {
   if (!model) return null;
 
   const isHuggingFaceModel = model.huggingface_url || (model.model_id && model.model_id.startsWith('hf_'));
+  const modelTag = isHuggingFaceModel ? "HF" : "Bundle";
+  const tagColorClass = isHuggingFaceModel 
+    ? "bg-blue-100 text-blue-800" 
+    : "bg-green-100 text-green-800";
 
   const handleBackdropClick = (e) => {
     if (e.target === e.currentTarget) {
@@ -112,9 +150,7 @@ function ModelDetailsModal({ model, onClose }) {
             <div>
               <div className="flex items-center gap-3">
                 <h2 className="text-xl sm:text-2xl font-bold text-brand-primary break-words">{model.model_name}</h2>
-                {isHuggingFaceModel && (
-                  <span className="px-2 py-1 bg-blue-100 text-blue-800 text-xs font-semibold rounded">HF Model</span>
-                )}
+                <span className={`px-2 py-1 ${tagColorClass} text-xs font-semibold rounded`}>{modelTag} Model</span>
               </div>
               <p className="text-sm text-gray-600 mt-1">Version {model.version}</p>
             </div>
@@ -288,15 +324,43 @@ function ModelDetailsModal({ model, onClose }) {
 function ModelZoo() {
   const [models, setModels] = useState([]);
   const [selectedModel, setSelectedModel] = useState(null);
+  const [activeTag, setActiveTag] = useState(null);
+  const [modelCount, setModelCount] = useState({ total: 0, bundle: 0, hf: 0 });
 
   useEffect(() => {
     const url = './model_data.json';
     console.log('Fetching data from:', url);
     fetch(url)
       .then(response => response.json())
-      .then(data => setModels(Object.values(data)))
+      .then(data => {
+        const modelList = Object.values(data);
+        setModels(modelList);
+        
+        // Count models by type
+        const bundleCount = modelList.filter(model => 
+          !(model.huggingface_url || (model.model_id && model.model_id.startsWith('hf_')))
+        ).length;
+        
+        const hfCount = modelList.filter(model => 
+          model.huggingface_url || (model.model_id && model.model_id.startsWith('hf_'))
+        ).length;
+        
+        setModelCount({
+          total: modelList.length,
+          bundle: bundleCount,
+          hf: hfCount
+        });
+      })
       .catch(error => console.error('Error fetching data:', error));
   }, []);
+
+  // Filter models based on selected tag
+  const filteredModels = activeTag === null 
+    ? models 
+    : models.filter(model => {
+        const isHF = model.huggingface_url || (model.model_id && model.model_id.startsWith('hf_'));
+        return activeTag === 'HF' ? isHF : !isHF;
+      });
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -362,17 +426,39 @@ function ModelZoo() {
 
       <section className="py-16 bg-brand-dark/15">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-gray-800 mb-8">
-            Available Models
-          </h2>
+          <div className="flex flex-col md:flex-row md:items-center justify-between mb-8">
+            <h2 className="text-3xl font-bold text-gray-800 mb-4 md:mb-0">
+              Available Models
+            </h2>
+            <div className="flex items-center gap-4">
+              <div className="text-sm text-gray-600">
+                <span className="font-medium">{modelCount.total}</span> models available
+                (<span className="text-green-600 font-medium">{modelCount.bundle}</span> Bundle, 
+                <span className="text-blue-600 font-medium"> {modelCount.hf}</span> HF)
+              </div>
+            </div>
+          </div>
+          
+          <TagFilter 
+            tags={['Bundle', 'HF']} 
+            activeTag={activeTag} 
+            onTagChange={setActiveTag} 
+          />
+          
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {models.map((model, index) => (
+            {filteredModels.map((model, index) => (
               <ModelCard
                 key={index}
                 model={model}
                 onViewDetails={setSelectedModel}
               />
             ))}
+            
+            {filteredModels.length === 0 && (
+              <div className="col-span-3 py-16 text-center">
+                <p className="text-lg text-gray-600">No models found matching the selected filter.</p>
+              </div>
+            )}
           </div>
         </div>
       </section>
