@@ -56,11 +56,11 @@ function ModelCard(_ref2) {
     className: "p-4 sm:p-6 shadow-lg rounded-lg border-2 border-neutral-lightgray relative transform transition-all duration-300 hover:shadow-xl hover:-translate-y-1 bg-white"
   }, /*#__PURE__*/React.createElement("div", {
     className: "flex flex-col h-full"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "flex justify-between items-start"
   }, /*#__PURE__*/React.createElement("h3", {
     className: "text-lg font-bold text-gray-800 mb-2 break-words"
-  }, model.model_name), /*#__PURE__*/React.createElement("span", {
+  }, model.model_name), /*#__PURE__*/React.createElement("div", {
+    className: "flex items-center gap-2 mb-2"
+  }, /*#__PURE__*/React.createElement("span", {
     className: "px-2 py-1 ".concat(tagColorClass, " text-xs font-semibold rounded")
   }, modelTag, " Model")), /*#__PURE__*/React.createElement("h5", {
     className: "text-brand-primary text-sm mb-2 break-words"
@@ -153,11 +153,11 @@ function ModelDetailsModal(_ref3) {
     className: "sticky top-0 z-10 bg-white px-4 sm:px-6 py-4 border-b border-gray-200"
   }, /*#__PURE__*/React.createElement("div", {
     className: "flex flex-col sm:flex-row sm:items-center justify-between gap-4"
-  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
-    className: "flex items-center gap-3"
-  }, /*#__PURE__*/React.createElement("h2", {
-    className: "text-xl sm:text-2xl font-bold text-brand-primary break-words"
-  }, model.model_name), /*#__PURE__*/React.createElement("span", {
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h2", {
+    className: "text-xl sm:text-2xl font-bold text-brand-primary break-words mb-2"
+  }, model.model_name), /*#__PURE__*/React.createElement("div", {
+    className: "flex items-center gap-3 mb-1"
+  }, /*#__PURE__*/React.createElement("span", {
     className: "px-2 py-1 ".concat(tagColorClass, " text-xs font-semibold rounded")
   }, modelTag, " Model")), /*#__PURE__*/React.createElement("p", {
     className: "text-sm text-gray-600 mt-1"
