@@ -1,7 +1,7 @@
 {
     "spleen_ct_segmentation": {
         "model_name": "Spleen CT segmentation",
-        "description": "A pre-trained model for volumetric (3D) segmentation of the spleen from CT image",
+        "description": "High-precision 3D segmentation model for spleen delineation in CT images with 96% Dice score performance, trained on the Medical Segmentation Decathlon dataset",
         "authors": "MONAI team",
         "papers": [
             "Xia, Yingda, et al. '3D Semi-Supervised Learning with Uncertainty-Aware Multi-View Co-Training. arXiv preprint arXiv:1811.12506 (2018). https://arxiv.org/abs/1811.12506.",
@@ -50,7 +50,7 @@
     },
     "pancreas_ct_dints_segmentation": {
         "model_name": "Pancreas CT DiNTS segmentation",
-        "description": "Searched architectures for volumetric (3D) segmentation of the pancreas from CT image",
+        "description": "Neural architecture search (DiNTS) optimized model for 3D segmentation of pancreas and pancreatic tumors in CT scans, balancing accuracy and computational efficiency",
         "authors": "MONAI team",
         "papers": [
             "He, Y., Yang, D., Roth, H., Zhao, C. and Xu, D., 2021. Dints: Differentiable neural network topology search for 3d medical image segmentation. In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (pp. 5841-5850)."
@@ -89,7 +89,7 @@
     },
     "brats_mri_segmentation": {
         "model_name": "BraTS MRI segmentation",
-        "description": "A pre-trained model for volumetric (3D) segmentation of brain tumor subregions from multimodal MRIs based on BraTS 2018 data",
+        "description": "High-precision 3D segmentation model for brain tumor subregions (tumor core, enhancing tumor, whole tumor) from multimodal MRIs, trained on the BraTS 2018 challenge dataset",
         "authors": "MONAI team",
         "papers": [
             "Myronenko, Andriy. '3D MRI brain tumor segmentation using autoencoder regularization.' International MICCAI Brainlesion Workshop. Springer, Cham, 2018. https://arxiv.org/abs/1810.11654"
@@ -130,7 +130,7 @@
     },
     "spleen_deepedit_annotation": {
         "model_name": "Spleen DeepEdit annotation",
-        "description": "This is a pre-trained model for 3D segmentation of the spleen organ from CT images using DeepEdit.",
+        "description": "Interactive DeepEdit-based model for 3D spleen segmentation from CT images that combines point-based user guidance with deep learning for accurate organ delineation",
         "authors": "MONAI team",
         "papers": [
             "Sakinis, Tomas, et al. 'Interactive segmentation of medical images through fully convolutional neural networks.' arXiv preprint arXiv:1903.08205 (2019)"
@@ -174,7 +174,7 @@
     },
     "swin_unetr_btcv_segmentation": {
         "model_name": "Swin UNETR BTCV segmentation",
-        "description": "A pre-trained model for volumetric (3D) multi-organ segmentation from CT image",
+        "description": "Transformer-based Swin UNETR architecture for 3D multi-organ segmentation of 13 abdominal structures in CT scans, leveraging self-supervised pre-training techniques",
         "authors": "MONAI team",
         "papers": [
             "Hatamizadeh, Ali, et al. 'Swin UNETR: Swin Transformers for Semantic Segmentation of Brain Tumors in MRI Images. arXiv preprint arXiv:2201.01266 (2022). https://arxiv.org/abs/2201.01266.",
@@ -219,7 +219,7 @@
     },
     "ventricular_short_axis_3label": {
         "model_name": "Ventricular short axis 3 label segmentation",
-        "description": "This network segments full cycle short axis images of the ventricles, labelling LV pool separate from myocardium and RV pool",
+        "description": "Cardiac MRI segmentation model that precisely delineates left ventricle blood pool, myocardium, and right ventricle blood pool throughout the cardiac cycle for functional assessment",
         "authors": "Eric Kerfoot",
         "papers": [],
         "version": "0.3.3",
@@ -237,7 +237,7 @@
     },
     "mednist_gan": {
         "model_name": "MedNIST GAN",
-        "description": "This example of a GAN generator produces hand xray images like those in the MedNIST dataset",
+        "description": "Generative adversarial network for synthesizing realistic hand X-ray images with controllable features trained on the MedNIST dataset",
         "authors": "MONAI Team",
         "papers": [],
         "version": "0.4.2",
@@ -255,7 +255,7 @@
     },
     "pathology_tumor_detection": {
         "model_name": "Pathology tumor detection",
-        "description": "A pre-trained model for metastasis detection on Camelyon 16 dataset.",
+        "description": "High-sensitivity metastatic tissue detection model for whole-slide pathology images, trained and validated on the Camelyon 16 dataset with FROC score of 0.72",
         "authors": "MONAI team",
         "papers": [
             ""
@@ -299,7 +299,7 @@
     },
     "renalStructures_UNEST_segmentation": {
         "model_name": "Renal structures UNEST segmentation",
-        "description": "A transformer-based model for renal segmentation from CT image",
+        "description": "Transformer-based model (UNEst) for high-precision segmentation of kidney cortex, medulla, and pelvicalyceal system in CT images, enabling detailed morphological analysis",
         "authors": "Vanderbilt University + MONAI team",
         "papers": [
             "Tang, Yucheng, et al. 'Self-supervised pre-training of swin transformers for 3d medical image analysis. arXiv preprint arXiv:2111.14791 (2021). https://arxiv.org/abs/2111.14791."
@@ -323,7 +323,7 @@
     },
     "wholeBrainSeg_Large_UNEST_segmentation": {
         "model_name": "Whole brain large UNEST segmentation",
-        "description": "A 3D transformer-based model for whole brain segmentation from T1W MRI image",
+        "description": "Advanced transformer-based 3D segmentation model that identifies 133 distinct brain structures in T1W MRI, supporting comprehensive neuroanatomical analysis and quantification",
         "authors": "Vanderbilt University + MONAI team",
         "papers": [
             "Xin, et al. Characterizing Renal Structures with 3D Block Aggregate Transformers. arXiv preprint arXiv:2203.02430 (2022). https://arxiv.org/pdf/2203.02430.pdf"
@@ -346,7 +346,7 @@
     },
     "prostate_mri_anatomy": {
         "model_name": "Prostate MRI anatomy",
-        "description": "A pre-trained model for volumetric (3D) segmentation of the prostate from MRI images",
+        "description": "Specialized 3D segmentation model that differentiates between central gland and peripheral zone within the prostate in MRI images, critical for prostate cancer diagnosis and treatment planning",
         "authors": "Keno Bressem",
         "papers": [
             "Adams, L. C., Makowski, M. R., Engel, G., Rattunde, M., Busch, F., Asbach, P., ... & Bressem, K. K. (2022). Prostate158-An expert-annotated 3T MRI dataset and algorithm for prostate cancer detection. Computers in Biology and Medicine, 148, 105817."
@@ -368,7 +368,7 @@
     },
     "valve_landmarks": {
         "model_name": "Valve landmarks regression",
-        "description": "This network is used to find where valves attach to heart to help construct 3D FEM models for computation. The output is an array of 10 2D coordinates.",
+        "description": "Cardiac valve landmark detection model that precisely localizes 10 valve insertion points throughout the cardiac cycle, enabling accurate 3D finite element modeling for cardiac simulation",
         "authors": "Eric Kerfoot",
         "papers": [
             "Kerfoot, E, King, CE, Ismail, T, Nordsletten, D & Miller, R 2021, Estimation of Cardiac Valve Annuli Motion with Deep Learning. https://doi.org/10.1007/978-3-030-68107-4_15"
@@ -390,7 +390,7 @@
     },
     "lung_nodule_ct_detection": {
         "model_name": "Lung nodule CT detection",
-        "description": "A pre-trained model for volumetric (3D) detection of the lung lesion from CT image on LUNA16 dataset",
+        "description": "High-sensitivity 3D detection model for lung nodules in CT scans, trained on the LUNA16 challenge dataset with optimized focal loss for identifying small pulmonary lesions",
         "authors": "MONAI team",
         "papers": [
             "Lin, Tsung-Yi, et al. 'Focal loss for dense object detection. ICCV 2017"
@@ -433,7 +433,7 @@
     },
     "endoscopic_tool_segmentation": {
         "model_name": "Endoscopic tool segmentation",
-        "description": "A pre-trained binary segmentation model for endoscopic tool segmentation",
+        "description": "Precise binary segmentation model for identifying surgical tools in endoscopic images, supporting computer-assisted surgery and procedural skills assessment",
         "authors": "NVIDIA DLMED team",
         "papers": [
             "Tan, M. and Le, Q. V. Efficientnet: Rethinking model scaling for convolutional neural networks. ICML, 2019a. https://arxiv.org/pdf/1905.11946.pdf",
@@ -476,7 +476,7 @@
     },
     "endoscopic_inbody_classification": {
         "model_name": "Endoscopic inbody classification",
-        "description": "A pre-trained binary classification model for endoscopic inbody classification task",
+        "description": "Binary classification model that distinguishes between inside-body and outside-body frames in endoscopic videos, enabling automated procedure analysis and irrelevant frame filtering",
         "authors": "NVIDIA DLMED team",
         "papers": [
             "J. Hu, L. Shen and G. Sun, Squeeze-and-Excitation Networks, 2018 IEEE/CVF Conference on Computer Vision and Pattern Recognition, 2018, pp. 7132-7141. https://arxiv.org/pdf/1709.01507.pdf"
@@ -515,7 +515,7 @@
     },
     "breast_density_classification": {
         "model_name": "Breast density classification",
-        "description": "A pre-trained model for classifying breast images (mammograms)  ",
+        "description": "Specialized classification model for assessing breast tissue density in mammograms according to BI-RADS categories, critical for breast cancer risk assessment and screening protocols",
         "authors": "Center for Augmented Intelligence in Imaging, Mayo Clinic Florida",
         "papers": [
             "Gupta, Vikash, et al. A multi-reconstruction study of breast density estimation using Deep Learning. arXiv preprint arXiv:2202.08238 (2022)."
@@ -536,7 +536,7 @@
     },
     "mednist_reg": {
         "model_name": "MedNIST registration",
-        "description": "This is an example of a ResNet and spatial transformer for hand xray image registration",
+        "description": "ResNet-based spatial transformer for precise hand X-ray image registration that optimizes alignment between moving and fixed images using the MedNIST dataset",
         "authors": "MONAI team",
         "papers": [],
         "version": "0.0.5",
@@ -553,7 +553,7 @@
     },
     "pathology_nuclei_classification": {
         "model_name": "Pathology nuclei classification",
-        "description": "A pre-trained model for Nuclei Classification within Haematoxylin & Eosin stained histology images",
+        "description": "Multi-class nuclei classification model for H&E-stained histology images that accurately differentiates between inflammatory, epithelial, and spindle-shaped cell types",
         "authors": "MONAI team",
         "papers": [
             "S. Graham, Q. D. Vu, S. E. A. Raza, A. Azam, Y-W. Tsang, J. T. Kwak and N. Rajpoot. \"HoVer-Net: Simultaneous Segmentation and Classification of Nuclei in Multi-Tissue Histology Images.\" Medical Image Analysis, Sept. 2019. https://doi.org/10.1016/j.media.2019.101563"
@@ -587,7 +587,7 @@
     },
     "pathology_nuclick_annotation": {
         "model_name": "Pathology nuclick annotation",
-        "description": "A pre-trained model for segmenting nuclei cells with user clicks/interactions",
+        "description": "Interactive nuclei segmentation model that leverages user-provided clicks to accurately delineate cell boundaries in histopathology images, facilitating rapid annotation",
         "authors": "MONAI team",
         "papers": [
             "Koohbanani, Navid Alemi, et al. \"NuClick: A Deep Learning Framework for Interactive Segmentation of Microscopy Images.\" https://arxiv.org/abs/2005.14511",
@@ -624,7 +624,7 @@
     },
     "pathology_nuclei_segmentation_classification": {
         "model_name": "Nuclear segmentation and classification",
-        "description": "A simultaneous segmentation and classification of nuclei within multitissue histology images based on CoNSeP data",
+        "description": "Multi-task learning model that simultaneously performs nuclei segmentation and type classification in H&E histology images using hover map representations trained on the CoNSeP dataset",
         "authors": "MONAI team",
         "papers": [
             "Simon Graham. 'HoVer-Net: Simultaneous Segmentation and Classification of Nuclei in Multi-Tissue Histology Images.' Medical Image Analysis, 2019. https://arxiv.org/abs/1812.06499"
@@ -655,7 +655,7 @@
     },
     "wholeBody_ct_segmentation": {
         "model_name": "Whole body CT segmentation",
-        "description": "A pre-trained SegResNet model for volumetric (3D) segmentation of the 104 whole body segments",
+        "description": "Comprehensive SegResNet-based volumetric segmentation model that identifies 104 different anatomical structures throughout the body from CT scans, trained on the TotalSegmentator dataset",
         "authors": "MONAI team",
         "papers": [
             "Wasserthal, J., Meyer, M., Breit, H.C., Cyriac, J., Yang, S. and Segeroth, M., 2022. TotalSegmentator: robust segmentation of 104 anatomical structures in CT images. arXiv preprint arXiv:2208.05868.",
@@ -688,7 +688,7 @@
     },
     "brats_mri_generative_diffusion": {
         "model_name": "BraTS MRI image latent diffusion generation",
-        "description": "A generative model for creating 3D brain MRI from Gaussian noise based on BraTS dataset",
+        "description": "Volumetric latent diffusion model that generates complete 3D brain MRI volumes with tumor features from Gaussian noise, trained on the BraTS multimodal MRI dataset",
         "authors": "MONAI team",
         "papers": [],
         "version": "1.1.2",
@@ -713,7 +713,7 @@
     },
     "brats_mri_axial_slices_generative_diffusion": {
         "model_name": "BraTS MRI axial slices latent diffusion generation",
-        "description": "A generative model for creating 2D brain MRI axial slices from Gaussian noise based on BraTS dataset",
+        "description": "Latent diffusion model that synthesizes realistic 2D brain MRI axial slices from Gaussian noise, trained on the BraTS dataset to generate diverse tumor and brain tissue appearances",
         "authors": "MONAI team",
         "papers": [],
         "version": "1.1.2",
@@ -738,7 +738,7 @@
     },
     "renalStructures_CECT_segmentation": {
         "model_name": "Segmentation of renal structures based on contrast computed tomography scans",
-        "description": "A UNET-based model for renal segmentation from contrast enhanced CT image",
+        "description": "UNet-based multi-class segmentation model for detailed renal structure analysis in contrast-enhanced CT, identifying arteries, veins, ureters, parenchyma and pathological features",
         "authors": "Sechenov university",
         "papers": [
             "Chernenkiy I. M. et al. Segmentation of renal structures based on contrast computed tomography scans using a convolutional neural network //Sechenov Medical Journal. – 2023. – Т. 14. – №. 1. – С. 39-49. URL - https://www.sechenovmedj.com/jour/article/view/899"
@@ -755,7 +755,7 @@
     },
     "multi_organ_segmentation": {
         "model_name": "Abdominal multi-organ segmentation",
-        "description": "DiNTS architectures for volumetric (3D) segmentation of the abdominal from CT image",
+        "description": "Neural architecture search (DiNTS) optimized model for 3D segmentation of eight abdominal organs from CT images, including liver, spleen, pancreas, and vascular structures",
         "authors": "Chen Shen, Holger R. Roth, Kazunari Misawa, Kensaku Mori",
         "papers": [
             "He, Y., Yang, D., Roth, H., Zhao, C. and Xu, D., 2021. Dints: Differentiable neural network topology search for 3d medical image segmentation. In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (pp. 5841-5850).",
@@ -775,7 +775,7 @@
     },
     "segmentation_template": {
         "model_name": "Segmentation Template",
-        "description": "This is a template bundle for segmenting in 3D, take this as a basis for your own bundles.",
+        "description": "Complete 3D segmentation framework with configurable architecture and preprocessing pipeline, designed as a foundation for developing custom medical volumetric segmentation models",
         "authors": "Eric Kerfoot",
         "papers": [],
         "version": "0.0.2",
@@ -789,7 +789,7 @@
     },
     "classification_template": {
         "model_name": "Classification Template",
-        "description": "This is a template bundle for classifying in 2D, take this as a basis for your own bundles.",
+        "description": "Comprehensive 2D classification template with modular architecture and standardized training pipeline, designed as a foundation for custom medical image classification models",
         "authors": "Yun Liu",
         "papers": [],
         "version": "0.0.2",
@@ -803,7 +803,7 @@
     },
     "vista3d": {
         "model_name": "VISTA3D",
-        "description": "VISTA3D bundle",
+        "description": "Versatile 3D segmentation model for multiple organs and anatomical structures in CT scans, supporting zero-shot learning with over 100 semantic labels for comprehensive volumetric analysis",
         "authors": "MONAI team",
         "papers": [],
         "version": "0.5.7",
@@ -832,7 +832,7 @@
     },
     "maisi_ct_generative": {
         "model_name": "CT image latent diffusion generation",
-        "description": "A generative model for creating 3D CT from Gaussian noise",
+        "description": "Conditional generative model for synthesizing anatomically accurate 3D CT volumes from Gaussian noise with user-specified body region and anatomical structures",
         "authors": "MONAI team",
         "papers": [],
         "version": "0.4.6",
@@ -889,7 +889,7 @@
     },
     "cxr_image_synthesis_latent_diffusion_model": {
         "model_name": "Cxr image synthesis latent diffusion model",
-        "description": "A generative model for creating high-resolution chest X-ray based on MIMIC dataset",
+        "description": "Latent diffusion model for generating high-resolution chest X-ray images with realistic anatomical features, trained on the MIMIC-CXR dataset with diverse pathology representation",
         "authors": "Walter Hugo Lopez Pinaya, Mark Graham, Eric Kerfoot, Virginia Fernandez",
         "papers": [],
         "version": "1.0.0",
@@ -902,7 +902,7 @@
     },
     "mednist_ddpm": {
         "model_name": "Mednist ddpm",
-        "description": "",
+        "description": "Denoising diffusion probabilistic model (DDPM) for generating synthetic hand X-ray images from the MedNIST dataset, demonstrating progressive noise-to-image generation",
         "authors": "Walter Hugo Lopez Pinaya, Mark Graham, and Eric Kerfoot",
         "papers": [],
         "version": "1.0.0",
@@ -915,7 +915,7 @@
     },
     "brain_image_synthesis_latent_diffusion_model": {
         "model_name": "Brain image synthesis latent diffusion model",
-        "description": "A generative model for creating high-resolution 3D brain MRI based on UK Biobank",
+        "description": "Advanced latent diffusion model for generating high-resolution 3D brain MRI images trained on UK Biobank data with control over age, gender, and brain morphology parameters",
         "authors": "Walter H. L. Pinaya, Petru-Daniel Tudosiu, Jessica Dafflon, Pedro F Da Costa, Virginia Fernandez, Parashkev Nachev, Sebastien Ourselin, and M. Jorge Cardoso",
         "papers": [
             "Pinaya, Walter HL, et al. \"Brain imaging generation with latent diffusion models.\" MICCAI Workshop on Deep Generative Models. Springer, Cham, 2022."
@@ -941,6 +941,39 @@
         "huggingface_url": "https://huggingface.co/LGAI-EXAONE/EXAONEPath",
         "changelog": {
             "1.0.0": "initial release of EXAONEPath 1.0"
+        }
+    },
+    "hf_llama3-vila-m3-8b": {
+        "model_name": "Llama3-VILA-M3-8B",
+        "description": "M3 is a medical visual language model based on VILA and Llama 3 that supports medical image analysis including segmentation, classification, visual question answering, and report generation across multiple imaging modalities.",
+        "authors": "MONAI team",
+        "papers": [
+            "VILA: https://github.com/NVlabs/VILA",
+            "Meta Llama 3: https://ai.meta.com/llama/"
+        ],
+        "version": "1.0.0",
+        "model_id": "hf_llama3-vila-m3-8b",
+        "readme": "<hr/>\n<p>license: other\nlicense_name: nvidia-oneway-noncommercial-license\nlicense_link: LICENSE\ntags:\n- medical-imaging\n- visual-language-model\n- multimodal\n- vila\n- llama3</p>\n<hr/>\n<h1>Llama3-VILA-M3-8B</h1>\n<blockquote>\n<p>Built with Meta Llama 3</p>\n</blockquote>\n<h2>Model Overview</h2>\n<h2>Description:</h2>\n<p>M3 is a medical visual language model that empowers medical imaging professionals, researchers, and healthcare enterprises by enhancing medical imaging workflows across various modalities. </p>\n<p>Key features include:\n- Integration with expert models from the MONAI Model Zoo\n- Support for multiple imaging modalities</p>\n<p>For more details, see our <a href=\"https://github.com/Project-MONAI/VLM\">repo</a></p>\n<h3>Core Capabilities</h3>\n<p>M3 NIM provides a comprehensive suite of 2D medical image analysis tools, including:\n1. Segmentation\n2. Classification\n3. Visual Question Answering (VQA)\n4. Report/Findings Generation</p>\n<p>These capabilities are applicable across various medical imaging modalities, leveraging expert models from the MONAI Model Zoo to ensure high-quality results.</p>\n<h2>Model Architecture:</h2>\n<p><strong>Architecture Type:</strong> Auto-Regressive Vision Language Model\n<strong>Network Architecture:</strong> <a href=\"https://github.com/NVlabs/VILA\">VILA</a> with Llama</p>\n<h2>Input:</h2>\n<p><strong>Input Type(s):</strong> Text and Image\n<strong>Input Format(s):</strong> Text: String, Image\n<strong>Input Parameters:</strong> Text: 1D, Image: 2D </p>\n<h2>Output:</h2>\n<p><strong>Output Type(s):</strong> Text and Image \n<strong>Output Format:</strong> Text: String and Image\n<strong>Output Parameters:</strong> Text: 1D, Image: 2D/3D </p>\n<h2>Ethical Considerations</h2>\n<p>NVIDIA believes Trustworthy AI is a shared responsibility and we have established policies and practices to enable development for a wide array of AI applications. When downloaded or used in accordance with our terms of service, developers should work with their internal model team to ensure this model meets requirements for the relevant industry and use case and addresses unforeseen product misuse.</p>",
+        "huggingface_url": "https://huggingface.co/MONAI/Llama3-VILA-M3-8B",
+        "changelog": {
+            "1.0.0": "initial release of Llama3-VILA-M3-8B"
+        }
+    },
+    "hf_ct-rate": {
+        "model_name": "CT-RATE",
+        "description": "CT-RATE is a pioneering dataset of 25,692 non-contrast chest CT volumes (expanded to 50,188 through various reconstructions) paired with corresponding radiology text reports, multi-abnormality labels, and metadata from 21,304 unique patients.",
+        "authors": "Ibrahim Ethem Hamamci, Sezgin Er, Furkan Almas, et al.",
+        "papers": [
+            "Hamamci, Ibrahim Ethem, et al. 'Developing Generalist Foundation Models from a Multimodal Dataset for 3D Computed Tomography.' arXiv preprint arXiv:2403.17834 (2024).",
+            "Hamamci, Ibrahim Ethem, et al. 'GenerateCT: Text-Conditional Generation of 3D Chest CT Volumes.' arXiv preprint arXiv:2305.16037 (2024).",
+            "Hamamci, Ibrahim Ethem, et al. 'CT2Rep: Automated Radiology Report Generation for 3D Medical Imaging.' arXiv preprint arXiv:2403.06801 (2024)."
+        ],
+        "version": "1.0.0",
+        "model_id": "hf_ct-rate",
+        "readme": "<hr/>\n<p>license: cc-by-nc-sa-4.0\ntags:\n- computed-tomography\n- chest-ct\n- medical-imaging\n- dataset\n- multimodal</p>\n<hr/>\n<h1>CT-RATE Dataset</h1>\n<h2><a href=\"https://arxiv.org/abs/2403.17834\">Developing Generalist Foundation Models from a Multimodal Dataset for 3D Computed Tomography</a></h2>\n<p>CT-RATE is a pioneering dataset in 3D medical imaging that uniquely pairs textual data with image data focused on chest CT volumes. The dataset comprises chest CT volumes paired with corresponding radiology text reports, multi-abnormality labels, and metadata, all freely accessible to researchers.</p>\n<h2>Dataset Overview</h2>\n<p>CT-RATE consists of 25,692 non-contrast chest CT volumes, expanded to 50,188 through various reconstructions, from 21,304 unique patients, along with corresponding radiology text reports, multi-abnormality labels, and metadata.</p>\n<p>The dataset is divided into:\n- Training set: 20,000 patients\n- Validation set: 1,304 patients</p>\n<p>File naming convention: <code>split_patientID_scanID_reconstructionID</code><br/>\nFor example, \"valid_53_a_1\" indicates a CT volume from the validation set, scan \"a\" from patient 53, and reconstruction 1 of scan \"a\".</p>\n<h2>Applications</h2>\n<p>This dataset has been used to develop several groundbreaking models:</p>\n<h3>CT-CLIP</h3>\n<p>A CT-focused contrastive language-image pre-training framework. As a versatile, self-supervised model, CT-CLIP is designed for broad application and does not require task-specific training. CT-CLIP outperforms state-of-the-art, fully supervised methods in multi-abnormality detection across all key metrics.</p>\n<h3>CT-CHAT</h3>\n<p>A multimodal AI assistant designed to enhance the interpretation and diagnostic capabilities of 3D chest CT imaging. Building on CT-CLIP, it integrates both visual and language processing to handle diverse tasks like visual question answering, report generation, and multiple-choice questions.</p>\n<h2>Dataset Configurations</h2>\n<ol>\n<li><strong>Labels</strong>: Multi-abnormality labels for the CT volumes</li>\n<li><strong>Reports</strong>: Corresponding radiology text reports</li>\n<li><strong>Metadata</strong>: Additional metadata for each CT volume</li>\n</ol>\n<h2>Terms and Conditions</h2>\n<p>Users of the CT-RATE dataset must agree to the <a href=\"https://huggingface.co/datasets/ibrahimhamamci/CT-RATE\">Terms and Conditions</a> which specify:</p>\n<ul>\n<li>The dataset is intended solely for academic, research, and educational purposes</li>\n<li>Any commercial exploitation is forbidden without permission</li>\n<li>Users must maintain data confidentiality and comply with data protection laws</li>\n<li>Proper attribution is required in any publications resulting from dataset use</li>\n<li>Redistribution of the dataset is not allowed</li>\n</ul>\n<h2>Ethical Approval</h2>\n<p>Ethical approval documentation is available for researchers who require it for grant applications.</p>\n<h2>Citation</h2>\n<p>When using this dataset, please consider citing the following related papers:</p>\n<pre><code class=\"language-bibtex\">@misc{hamamci2024foundation,\n      title={Developing Generalist Foundation Models from a Multimodal Dataset for 3D Computed Tomography}, \n      author={Ibrahim Ethem Hamamci and Sezgin Er and Furkan Almas and Ayse Gulnihan Simsek and Sevval Nil Esirgun and Irem Dogan and Muhammed Furkan Dasdelen and Omer Faruk Durugol and Bastian Wittmann and Tamaz Amiranashvili and Enis Simsar and Mehmet Simsar and Emine Bensu Erdemir and Abdullah Alanbay and Anjany Sekuboyina and Berkan Lafci and Christian Bluethgen and Mehmet Kemal Ozdemir and Bjoern Menze},\n      year={2024},\n      eprint={2403.17834},\n      archivePrefix={arXiv},\n      primaryClass={cs.CV},\n      url={https://arxiv.org/abs/2403.17834}, \n}\n\n@misc{hamamci2024generatect,\n      title={GenerateCT: Text-Conditional Generation of 3D Chest CT Volumes}, \n      author={Ibrahim Ethem Hamamci and Sezgin Er and Anjany Sekuboyina and Enis Simsar and Alperen Tezcan and Ayse Gulnihan Simsek and Sevval Nil Esirgun and Furkan Almas and Irem Dogan and Muhammed Furkan Dasdelen and Chinmay Prabhakar and Hadrien Reynaud and Sarthak Pati and Christian Bluethgen and Mehmet Kemal Ozdemir and Bjoern Menze},\n      year={2024},\n      eprint={2305.16037},\n      archivePrefix={arXiv},\n      primaryClass={cs.CV},\n      url={https://arxiv.org/abs/2305.16037}, \n}\n\n@misc{hamamci2024ct2rep,\n      title={CT2Rep: Automated Radiology Report Generation for 3D Medical Imaging}, \n      author={Ibrahim Ethem Hamamci and Sezgin Er and Bjoern Menze},\n      year={2024},\n      eprint={2403.06801},\n      archivePrefix={arXiv},\n      primaryClass={eess.IV},\n      url={https://arxiv.org/abs/2403.06801}, \n}\n</code></pre>",
+        "huggingface_url": "https://huggingface.co/datasets/ibrahimhamamci/CT-RATE",
+        "changelog": {
+            "1.0.0": "initial release of CT-RATE dataset"
         }
     }
 }
