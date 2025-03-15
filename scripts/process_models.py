@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Process models from MONAI Model Zoo and HuggingFace directory
-to create a unified model_data.json file for the website.
+Process models from MONAI Model Zoo to create a model_data.json file for the website.
+HuggingFace models are now managed in the model-zoo repository.
 """
 
 import os
@@ -30,26 +30,6 @@ def get_model_info(model_dir):
     
     return metadata, readme_soup
 
-def get_hf_model_info(model_dir):
-    """Extract metadata and README from a HuggingFace model directory."""
-    metadata_path = os.path.join(model_dir, "metadata.json")
-    readme_path = os.path.join(model_dir, "README.md")
-    
-    with open(metadata_path, 'r') as f:
-        metadata = json.load(f)
-    
-    with open(readme_path, 'r') as f:
-        readme_content = f.read()
-        # Strip front matter if present
-        if readme_content.startswith('---'):
-            parts = readme_content.split('---', 2)
-            if len(parts) >= 3:
-                readme_content = parts[2]
-        readme_html = markdown.markdown(readme_content, extensions=['tables', 'fenced_code'])
-        readme_soup = BeautifulSoup(readme_html, "html.parser")
-    
-    return metadata, readme_soup
-
 def process_models():
     """Process all models and create a unified model_data.json file."""
     # Get the directory containing this script
@@ -57,7 +37,6 @@ def process_models():
     repo_root = script_dir.parent
     models_dir = script_dir / "model-zoo" / "models"
     model_info_path = models_dir / "model_info.json"
-    hf_models_dir = repo_root / "hf"
     output_file = script_dir / "model_data.json"
 
     all_models = {}
@@ -94,56 +73,6 @@ def process_models():
                 print(f"Processed model: {base_model_name}")
             except Exception as e:
                 print(f"Error processing {base_model_name}: {str(e)}")
-                continue
-    
-    # Process HF models
-    if hf_models_dir.exists():
-        for model_dir in hf_models_dir.iterdir():
-            if not model_dir.is_dir():
-                continue
-                
-            model_id = model_dir.name
-            
-            try:
-                metadata, readme_soup = get_hf_model_info(str(model_dir))
-                
-                # Extract paper references from metadata
-                papers = []
-                if "references" in metadata:
-                    for ref in metadata["references"]:
-                        if isinstance(ref, dict):
-                            # Format citation string from structured reference
-                            citation = f"{ref.get('title', '')}. "
-                            if ref.get('authors'):
-                                citation += f"{ref.get('authors', '')}. "
-                            if ref.get('journal'):
-                                citation += f"{ref.get('journal', '')}. "
-                            if ref.get('year'):
-                                citation += f"{ref.get('year', '')}. "
-                            if ref.get('url'):
-                                citation += f"[{ref.get('url', '')}]"
-                            papers.append(citation)
-                        else:
-                            papers.append(ref)
-                
-                # Use model_url for download if available, otherwise construct a fallback URL
-                download_url = metadata.get("model_url", "")
-                
-                all_models[f"hf_{model_id}"] = {
-                    "model_name": metadata.get("name", model_id.capitalize()),
-                    "description": metadata.get("description", ""),
-                    "authors": metadata.get("authors", ""),
-                    "papers": papers,
-                    "version": metadata.get("version", "1.0.0"),
-                    "model_id": f"hf_{model_id}",
-                    "readme": str(readme_soup),
-                    "download_url": download_url,
-                    "changelog": metadata.get("changelog", {})
-                }
-                
-                print(f"Processed HF model: {model_id}")
-            except Exception as e:
-                print(f"Error processing HF model {model_id}: {str(e)}")
                 continue
 
     # Write the combined data to a JSON file

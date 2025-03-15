@@ -6,6 +6,11 @@ function formatDownloadUrl(model) {
     return model.download_url;
   }
   
+  // If the model has a huggingface_url, use that
+  if (model.huggingface_url) {
+    return model.huggingface_url;
+  }
+  
   // For traditional MONAI models, use the proxy URL format
   const modelName = model.model_name.toLowerCase().replace(/\s+/g, '_');
   const version = model.version;
@@ -14,10 +19,17 @@ function formatDownloadUrl(model) {
 }
 
 function ModelCard({ model, onViewDetails }) {
+  const isHuggingFaceModel = model.huggingface_url || (model.model_id && model.model_id.startsWith('hf_'));
+  
   return (
     <div className="p-4 sm:p-6 shadow-lg rounded-lg border-2 border-neutral-lightgray relative transform transition-all duration-300 hover:shadow-xl hover:-translate-y-1 bg-white">
       <div className="flex flex-col h-full">
-        <h3 className="text-lg font-bold text-gray-800 mb-2 break-words">{model.model_name}</h3>
+        <div className="flex justify-between items-start">
+          <h3 className="text-lg font-bold text-gray-800 mb-2 break-words">{model.model_name}</h3>
+          {isHuggingFaceModel && (
+            <span className="px-2 py-1 bg-blue-100 text-blue-800 text-xs font-semibold rounded">HF Model</span>
+          )}
+        </div>
         <h5 className="text-brand-primary text-sm mb-2 break-words">{model.authors}</h5>
         <p className="text-sm text-gray-600 mb-4 line-clamp-3 break-words">{model.description}</p>
         
@@ -44,11 +56,12 @@ function ModelCard({ model, onViewDetails }) {
             <a
               href={formatDownloadUrl(model)}
               className="brand-btn flex items-center justify-center py-2 px-6 text-sm sm:ml-auto"
-              download
+              target={isHuggingFaceModel ? "_blank" : "_self"}
+              rel={isHuggingFaceModel ? "noopener noreferrer" : ""}
             >
-              <span>Download</span>
+              <span>{isHuggingFaceModel ? "View on HF" : "Download"}</span>
               <svg className="w-4 h-4 ml-1.5 flex-shrink-0 transition-transform group-hover:translate-y-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={isHuggingFaceModel ? "M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" : "M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"} />
               </svg>
             </a>
           </div>
@@ -60,6 +73,8 @@ function ModelCard({ model, onViewDetails }) {
 
 function ModelDetailsModal({ model, onClose }) {
   if (!model) return null;
+
+  const isHuggingFaceModel = model.huggingface_url || (model.model_id && model.model_id.startsWith('hf_'));
 
   const handleBackdropClick = (e) => {
     if (e.target === e.currentTarget) {
@@ -95,18 +110,28 @@ function ModelDetailsModal({ model, onClose }) {
         <div className="sticky top-0 z-10 bg-white px-4 sm:px-6 py-4 border-b border-gray-200">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
-              <h2 className="text-xl sm:text-2xl font-bold text-brand-primary break-words">{model.model_name}</h2>
+              <div className="flex items-center gap-3">
+                <h2 className="text-xl sm:text-2xl font-bold text-brand-primary break-words">{model.model_name}</h2>
+                {isHuggingFaceModel && (
+                  <span className="px-2 py-1 bg-blue-100 text-blue-800 text-xs font-semibold rounded">HF Model</span>
+                )}
+              </div>
               <p className="text-sm text-gray-600 mt-1">Version {model.version}</p>
             </div>
             <div className="flex items-center gap-3 -mr-2 sm:mr-0">
               <a
                 href={formatDownloadUrl(model)}
                 className="brand-btn flex-1 sm:flex-initial flex items-center justify-center px-4 py-2 text-sm"
-                download
+                target={isHuggingFaceModel ? "_blank" : "_self"}
+                rel={isHuggingFaceModel ? "noopener noreferrer" : ""}
               >
-                <span>Download</span>
+                <span>{isHuggingFaceModel ? "View on HF" : "Download"}</span>
                 <svg className="w-4 h-4 ml-1.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" 
+                    d={isHuggingFaceModel ? 
+                      "M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" : 
+                      "M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"}
+                  />
                 </svg>
               </a>
               <button
@@ -128,6 +153,24 @@ function ModelDetailsModal({ model, onClose }) {
             {/* Overview Section */}
             <div className="mb-8">
               <h3 className="text-lg font-semibold text-gray-900 mb-3">Overview</h3>
+              {isHuggingFaceModel && (
+                <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-4">
+                  <div className="flex">
+                    <div className="flex-shrink-0">
+                      <svg className="h-5 w-5 text-yellow-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                    <div className="ml-3">
+                      <p className="text-sm text-yellow-700">
+                        <strong>Warning:</strong> This is a Hugging Face model that doesn't follow the standard MONAI Bundle format. 
+                        It cannot be run using standard MONAI Bundle APIs. Please refer to the documentation below or 
+                        visit the <a href={formatDownloadUrl(model)} target="_blank" rel="noopener noreferrer" className="font-medium underline text-yellow-700 hover:text-yellow-600">Hugging Face repository</a> for complete usage instructions.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
               <p className="text-gray-600 break-words">{model.description}</p>
             </div>
 
@@ -219,11 +262,20 @@ function ModelDetailsModal({ model, onClose }) {
             <a
               href={formatDownloadUrl(model)}
               className="w-full sm:w-auto brand-btn flex items-center justify-center"
-              download
+              target={isHuggingFaceModel ? "_blank" : "_self"}
+              rel={isHuggingFaceModel ? "noopener noreferrer" : ""}
             >
-              Download Model
+              {isHuggingFaceModel ? "View on Hugging Face" : "Download Model"}
               <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                <path 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                  strokeWidth="2" 
+                  d={isHuggingFaceModel ? 
+                    "M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" : 
+                    "M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                  }
+                />
               </svg>
             </a>
           </div>
