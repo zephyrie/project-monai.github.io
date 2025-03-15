@@ -60,8 +60,8 @@ function ModelCard({ model, onViewDetails }) {
   return (
     <div className="p-4 sm:p-6 shadow-lg rounded-lg border-2 border-neutral-lightgray relative transform transition-all duration-300 hover:shadow-xl hover:-translate-y-1 bg-white">
       <div className="flex flex-col h-full">
-        <div className="flex justify-between items-start">
-          <h3 className="text-lg font-bold text-gray-800 mb-2 break-words">{model.model_name}</h3>
+        <h3 className="text-lg font-bold text-gray-800 mb-2 break-words">{model.model_name}</h3>
+        <div className="flex items-center gap-2 mb-2">
           <span className={`px-2 py-1 ${tagColorClass} text-xs font-semibold rounded`}>{modelTag} Model</span>
         </div>
         <h5 className="text-brand-primary text-sm mb-2 break-words">{model.authors}</h5>
@@ -148,8 +148,8 @@ function ModelDetailsModal({ model, onClose }) {
         <div className="sticky top-0 z-10 bg-white px-4 sm:px-6 py-4 border-b border-gray-200">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
-              <div className="flex items-center gap-3">
-                <h2 className="text-xl sm:text-2xl font-bold text-brand-primary break-words">{model.model_name}</h2>
+              <h2 className="text-xl sm:text-2xl font-bold text-brand-primary break-words mb-2">{model.model_name}</h2>
+              <div className="flex items-center gap-3 mb-1">
                 <span className={`px-2 py-1 ${tagColorClass} text-xs font-semibold rounded`}>{modelTag} Model</span>
               </div>
               <p className="text-sm text-gray-600 mt-1">Version {model.version}</p>
