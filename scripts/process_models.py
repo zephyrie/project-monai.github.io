@@ -1,15 +1,22 @@
+#!/usr/bin/env python3
+"""
+Process models from MONAI Model Zoo and HuggingFace directory
+to create a unified model_data.json file for the website.
+"""
+
 import os
 import json
-import re
 from pathlib import Path
-from bs4 import BeautifulSoup
 import markdown
+from bs4 import BeautifulSoup
 
 def get_latest_version(versions):
+    """Find the latest version from a list of versioned model names."""
     numeric_versions = [v.split('_v')[-1] for v in versions if v.split('_v')[-1].replace('.', '').isdigit()]
     return max(numeric_versions, key=lambda k: tuple(map(int, k.split('.')))) if numeric_versions else max(versions)
 
 def get_model_info(model_dir):
+    """Extract metadata and README from a MONAI Model Zoo model."""
     metadata_path = os.path.join(model_dir, "configs", "metadata.json")
     readme_path = os.path.join(model_dir, "docs", "README.md")
     
@@ -24,6 +31,7 @@ def get_model_info(model_dir):
     return metadata, readme_soup
 
 def get_hf_model_info(model_dir):
+    """Extract metadata and README from a HuggingFace model directory."""
     metadata_path = os.path.join(model_dir, "metadata.json")
     readme_path = os.path.join(model_dir, "README.md")
     
@@ -42,7 +50,8 @@ def get_hf_model_info(model_dir):
     
     return metadata, readme_soup
 
-def main():
+def process_models():
+    """Process all models and create a unified model_data.json file."""
     # Get the directory containing this script
     script_dir = Path(__file__).parent
     repo_root = script_dir.parent
@@ -55,7 +64,6 @@ def main():
     
     # Process regular model-zoo models if the model_info.json exists
     if model_info_path.exists():
-        # Load model_info.json
         with open(model_info_path, 'r') as f:
             model_info = json.load(f)
 
@@ -81,8 +89,9 @@ def main():
                     "model_id": base_model_name,
                     "readme": str(readme_soup),
                     "download_url": model_data.get("source", ""),
-                    "changelog": metadata.get("changelog")  # Get changelog directly from metadata
+                    "changelog": metadata.get("changelog", {})
                 }
+                print(f"Processed model: {base_model_name}")
             except Exception as e:
                 print(f"Error processing {base_model_name}: {str(e)}")
                 continue
@@ -142,6 +151,7 @@ def main():
         json.dump(all_models, f, indent=4, ensure_ascii=False)
     
     print(f"Generated model data with {len(all_models)} models")
+    return all_models
 
 if __name__ == "__main__":
-    main()
+    process_models()
