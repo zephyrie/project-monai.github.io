@@ -30,12 +30,28 @@ def get_model_info(model_dir):
     
     return metadata, readme_soup
 
+def get_hf_model_info(model_dir):
+    """Extract metadata and README from a HuggingFace model folder in model-zoo."""
+    metadata_path = os.path.join(model_dir, "metadata.json")
+    readme_path = os.path.join(model_dir, "README.md")
+    
+    with open(metadata_path, 'r') as f:
+        metadata = json.load(f)
+    
+    with open(readme_path, 'r') as f:
+        readme_content = f.read()
+        readme_html = markdown.markdown(readme_content, extensions=['tables', 'fenced_code'])
+        readme_soup = BeautifulSoup(readme_html, "html.parser")
+    
+    return metadata, readme_soup
+
 def process_models():
     """Process all models and create a unified model_data.json file."""
     # Get the directory containing this script
     script_dir = Path(__file__).parent
     repo_root = script_dir.parent
     models_dir = script_dir / "model-zoo" / "models"
+    hf_models_dir = script_dir / "model-zoo" / "hf_models"
     model_info_path = models_dir / "model_info.json"
     output_file = script_dir / "model_data.json"
 
@@ -73,6 +89,33 @@ def process_models():
                 print(f"Processed model: {base_model_name}")
             except Exception as e:
                 print(f"Error processing {base_model_name}: {str(e)}")
+                continue
+    
+    # Process HuggingFace models
+    if hf_models_dir.exists():
+        # List all subdirectories in the hf_models directory
+        hf_model_dirs = [d for d in hf_models_dir.iterdir() if d.is_dir()]
+        
+        for model_dir in hf_model_dirs:
+            try:
+                model_id = f"hf_{model_dir.name}"
+                metadata, readme_soup = get_hf_model_info(str(model_dir))
+                
+                # Extract model info from metadata.json
+                all_models[model_id] = {
+                    "model_name": metadata.get("name", model_dir.name.replace("_", " ").capitalize()),
+                    "description": metadata.get("description", ""),
+                    "authors": metadata.get("authors", "MONAI team"),
+                    "papers": metadata.get("references", []),
+                    "version": metadata.get("version", "1.0"),
+                    "model_id": model_id,
+                    "readme": str(readme_soup),
+                    "huggingface_url": metadata.get("huggingface_url", ""),
+                    "changelog": metadata.get("changelog", {})
+                }
+                print(f"Processed HF model: {model_id}")
+            except Exception as e:
+                print(f"Error processing HF model {model_dir.name}: {str(e)}")
                 continue
 
     # Write the combined data to a JSON file
