@@ -1,7 +1,12 @@
 const { useState, useEffect } = React;
 
 function formatDownloadUrl(model) {
-  // Extract model name and version
+  // If the model has an explicit download_url, use it
+  if (model.download_url) {
+    return model.download_url;
+  }
+  
+  // For traditional MONAI models, use the proxy URL format
   const modelName = model.model_name.toLowerCase().replace(/\s+/g, '_');
   const version = model.version;
   
