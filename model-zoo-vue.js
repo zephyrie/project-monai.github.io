@@ -133,7 +133,7 @@ var ModelListView = {
           case 0:
             _context.prev = 0;
             _context.next = 3;
-            return fetch('/model_data.json');
+            return fetch('model_data.json');
           case 3:
             response = _context.sent;
             if (response.ok) {
@@ -207,7 +207,7 @@ var ModelDetailView = {
             window.scrollTo(0, 0);
             _context2.prev = 1;
             _context2.next = 4;
-            return fetch('/model_data.json');
+            return fetch('model_data.json');
           case 4:
             response = _context2.sent;
             if (response.ok) {

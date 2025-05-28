@@ -158,7 +158,7 @@ const ModelListView = {
 
     onMounted(async () => {
       try {
-        const response = await fetch('/model_data.json');
+        const response = await fetch('model_data.json');
         if (!response.ok) throw new Error('Failed to fetch model data');
         models.value = await response.json();
       } catch (err) {
@@ -335,7 +335,7 @@ const ModelDetailView = {
       window.scrollTo(0, 0);
       
       try {
-        const response = await fetch('/model_data.json');
+        const response = await fetch('model_data.json');
         if (!response.ok) throw new Error('Failed to fetch model data');
         const data = await response.json();
         const modelId = route.params.id;
